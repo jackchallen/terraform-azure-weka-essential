@@ -1,8 +1,8 @@
-# Azure-weka deployment Terraform package
-Essential weka deployment.
-<br>Creates vms and proximity placement group. Proximity placement group id can be passed and then it will not be created.
-<br>The deployment can use existing network or create vnet/subnet/security groups.
-- This deployment was created for essential weka deployment with minimum permissions.
+# Azure WEKA essentials deployment Terraform package
+This is a minimal deployment of WEKA in Azure
+Creates VMs and proximity placement group. The proximity placement group ID can be passed, otherwise it will be created
+The deployment can use an existing network or create vnet/subnet/security groups.
+- This deployment was created for essential weka deployment with minimal permissions.
 - This deployment doesn't support auto-scaling.
 - If you wish to review our full solution you can find it [here](https://github.com/weka/terraform-azure-weka)
 
@@ -42,23 +42,23 @@ We have 2 variables that define resource group:
 - rg_name
 - vnet_rg_name
 #### rg_name:
-The resource group were weka cluster and all necessary resources will be deployed.
+The resource group in which your WEKA cluster and all necessary resources will be deployed.
 #### vnet_rg_name:
 The resource group of the vnet and subnet.
-<br>If `vnet_rg_name` isn't set by the user, we assume that the
+If `vnet_rg_name` isn't set by the user, we assume that the
 vnet and subnet resource group is the as the weka deployment resource group.
-<br> i.e we assume `vnet_rg_name = rg_name`
+i.e we assume `vnet_rg_name = rg_name`
 
 ## Network deployment options
-This weka deployment can use existing network, or create network resources (vmet, subnet, security group) automatically.
-<br>Check our [examples](examples).
-<br>In case you want to use an existing network, you **must** provide network params.
-<br>**Example**:
+This weka deployment can use an existing network, or create network resources (vnet, subnet, security group) automatically.
+Check our [examples](examples).
+In case you want to use an existing network, you **must** provide network parameters.
+**Example**:
 ```hcl
 vnet_name           = "essential-vnet"
 subnet_name         = "essential-subnet"
 ```
-**If you don't pass these params, we will automatically create the network resources.**
+**If you don't pass these parameters, we will automatically create the network resources.**
 ### Weka deployment using existing network full example:
 ```hcl
 module "weka_deployment" {
@@ -76,7 +76,7 @@ module "weka_deployment" {
 ```
 
 ### Weka deployment creating network resources (vnet, subnet, security group) full example:
-Note: the network params from above are not supplied here:
+Note: the network parameters from above are not supplied here:
 ```hcl
 module "weka_deployment" {
   source            = "git@github.com:weka/terraform-azure-weka-essential.git"
@@ -127,13 +127,13 @@ tiering_ssd_percent = VALUE
 ```
 ## Clients
 We support creating clients that will be mounted automatically to the cluster.
-<br>In order to create clients you need to provide the number of clients you want (by default the number is 0),
+In order to create clients you need to provide the number of clients you want (by default the number is 0),
 for example:
 ```hcl
 clients_number = 2
 ```
 This will automatically create 2 clients.
-<br>In addition you can supply these optional variables:
+In addition you can supply these optional variables:
 ```hcl
 client_instance_type = "Standard_D4_v4"
 client_nics_num = DESIRED_NUM
@@ -178,7 +178,7 @@ In case you would like to view how we created the image you can find it [here](h
 You can as well create it on your own subscription and use it.
 ## Terraform output
 In the output you will get the cluster backends (and clients if you asked for) ips.
-<br>If `assign_public_ip` is set to `true` you will get a list of public ips, otherwise a list of private ips.
+If `assign_public_ip` is set to `true` you will get a list of public ips, otherwise a list of private ips.
 
 <!-- BEGIN_TF_DOCS -->
 ## Requirements
